@@ -4,7 +4,7 @@
   "description": "Проверяем трафик и в случае окончания нажимаем продлить а также, проверяем баланс и отправляем его в телегу",
   "main": "app.js",
   "scripts": {
-    "start":"node app",
+    "start": "node app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/vald5116/lk_astrainternet#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "needle": "^2.4.0"
+    "needle": "^2.4.0",
+    "request": "^2.88.0"
   }
 }
