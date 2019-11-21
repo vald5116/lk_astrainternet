@@ -19,7 +19,9 @@
   "homepage": "https://github.com/vald5116/lk_astrainternet#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "jsdom": "^15.2.1",
     "needle": "^2.4.0",
+    "node-html-parser": "^1.1.16",
     "request": "^2.88.0"
   }
 }

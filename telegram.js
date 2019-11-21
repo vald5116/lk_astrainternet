@@ -5,7 +5,7 @@ var telegram = {
 	send_msg : (msg, chanel = config.telegram.chat_id) => {
 		r.post({
 			url:'https://api.telegram.org/bot'+config.telegram.token+'/sendmessage',
-    	 	json: { chat_id: chanel,  text : msg, parse_mode : "Markdown", "disable_web_page_preview" : true}
+    	 	json: { chat_id: chanel,  text : msg, parse_mode : "Markdown", "disable_web_page_preview" : true, "disable_notification" : true}
     	});	
 	},	
 };
