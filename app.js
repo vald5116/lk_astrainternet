@@ -42,17 +42,21 @@ var lk = {
 				if (sum<401) telegram.send_msg(`💸 #${config[user].account} Баланс: ${sum}, Нужно пополнить!`);
 				if (ost.split(' ')[1]=='мб') {
 					console.log('mb');
-					if (Number(ost.split(' ')[0])<=100) {
+					if (Number(ost.split(' ')[0])<=150) {
 						telegram.send_msg(`⛔️ #${config[user].account} Заканчивается трафик Баланс: ${sum}, Остаток трафика: ${ost}`);
 						lk.test(user)
 					}
+				}else if(ost.split(' ')[1]==''){
+
 				}
 			}
 		});
 	},	
 	test : (user) =>{
+		console.log('test');
+		console.log('________________________________________')
 		needle.get(`${config.url}/get_buttons?ajax=true`, {cookies:config[user].cookies,"user_agent":"Mozilla/5.0 (Linux; Android 8.1.0; Redmi 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.99 Mobile Safari/537.36"}, //Переходим на главную
-		  function(err, resp, body) {
+		  async function(err, resp, body) {
 		  	if (resp.statusCode==302) lk.auth(user);
 		  	else{
 		  		telegram.send_msg(`⚠️ #${config[user].account} Пытаюсь активаровать!`);
@@ -66,16 +70,19 @@ var lk = {
 					if (id==2) {
 						// console.log(id);
 						// console.log($(".service_form").serialize().split('&')[i].split('='));
-						data[$(".service_form").serialize().split('&')[i].split('=')[0]]=$(".service_form").serialize().split('&')[i].split('=')[1]}
+						data[$(".service_form").serialize().split('&')[i].split('=')[0]]= await $(".service_form").serialize().split('&')[i].split('=')[1]}
 				}
 				console.log(data)
-				console.log('________________________________________')
-				r.post({ url: `${config.url}/service/button_on`, timeout: 15000 , jsonData:data}, (body, ress, err) => { 
-					console.log(body,ress,err); 
-					if (body) {
-						telegram.send_msg(`✅ #${config[user].account} У меня удалось активировать!`);
-					} else {
-						telegram.send_msg(`🚫 #${config[user].account} Не удалось активировать!`);
+				needle.post(`${config.url}/service/button_on`, data, {timeout : 60000,cookies:config[user].cookies,"user_agent":"Mozilla/5.0 (Linux; Android 8.1.0; Redmi 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.99 Mobile Safari/537.36"}, (err, resp, body) => { 
+					console.log('________________________________________')
+					console.log(body)
+					console.log('________________________________________')
+					if(body){
+						if (body.status=='success') {
+							telegram.send_msg(`✅ #${config[user].account} У меня удалось активировать!`);
+						} else {
+							telegram.send_msg(`🚫 #${config[user].account} Не удалось активировать!`);
+						}
 					}
 				});
 			}
@@ -91,19 +98,18 @@ var lk = {
 
 // lk.check('account');
 
-
-
-
-// setTimeout(function () {
-	for (var i = config.accounts.length - 1; i >= 0; i--) {
-		start(config.accounts[i])
-	}
-// }, lk.getRandomInt(180000,300000));//3-5 минут
-
 function start(user){
 	setInterval(function () {
 		lk.check(user);
-	}, lk.getRandomInt(180000,300000));//3-5 минут
+	}, lk.getRandomInt(90000,180000));//3-5 минут
 }
 
 // lk.getRandomInt(36000,63000)//0,6-1,05 минут
+
+if (config.accounts.length!=0) {	
+	for (var i = config.accounts.length - 1; i >= 0; i--) {
+		start(config.accounts[i])
+	}
+} else {
+	console.log("У вас нет не одного аккаунта добавьте его в config")
+}
