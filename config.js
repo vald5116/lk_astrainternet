@@ -2,10 +2,12 @@
 
 var 
  config = {
+ 	accounts : ['account'],
 	account : {
 		account : '', //Логин
-	  	password : '' // Пароль
-	  },
+	  	password : '', // Пароль
+	  	cookies : false
+	  }
 	telegram : {
 		token : '',
 		chat_id : ''
